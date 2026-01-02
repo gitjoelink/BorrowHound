@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<a href="https://www.borrowhound.com">Borrow Hound</a>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BorrowHound.com – Coming Soon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;500;700&display=swap" rel="stylesheet" />
+
+  <!-- LaunchList widget (Step 1) -->
+  <script src="https://getlaunchlist.com/js/widget.js" defer></script>
+
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-soft: #0b1020;
+      --accent: #ffb347;
+      --accent-soft: #ffe3b5;
+      --text-main: #f8fafc;
+      --text-muted: #9ca3af;
+      --pill: #111827;
+      --radius-lg: 22px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.8);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 55%, #000 100%);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background:
+        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.15), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(251, 191, 36, 0.16), transparent 55%);
+    }
+
+    /* Top nav */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom, rgba(2, 6, 23, 0.9), rgba(2, 6, 23, 0.35));
+      border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+    }
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0.65rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+    .brand-logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow:
+        0 0 0 2px rgba(15, 23, 42, 0.9),
+        0 12px 30px rgba(15, 23, 42, 0.9);
+      background: #020617;
+    }
+    .brand-text-main {
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      font-size: 0.98rem;
+      text-transform: uppercase;
+    }
+    .brand-text-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .nav-pill {
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+    .nav-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.4);
+    }
+
+    /* Hero */
+    .hero {
+      flex: 1;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      padding: 2.5rem 1.25rem 3.25rem;
+    }
+    .hero-inner {
+      width: 100%;
+      max-width: 1120px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.1fr);
+      gap: 1.7rem;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 2.4rem;
+      }
+    }
+    .hero-copy { position: relative; z-index: 5; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0.55rem 0.25rem 0.3rem;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.42);
+      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.9);
+      margin-bottom: 0.95rem;
+    }
+    .eyebrow-tag {
+      font-size: 0.72rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(251, 191, 36, 0.14);
+      color: var(--accent);
+      border: 1px solid rgba(250, 204, 21, 0.45);
+    }
+    .eyebrow-text {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .hero-title {
+      font-size: clamp(2.15rem, 5vw, 2.95rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.7rem;
+    }
+    .hero-title span { color: var(--accent); }
+
+    .hero-sub {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 26rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .coming-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: var(--radius-pill);
+      padding: 0.35rem 0.9rem;
+      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 1.3rem;
+    }
+    .coming-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #f97316;
+      box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.32);
+    }
+    .coming-text-main {
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .coming-text-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 1.7rem;
+    }
+    .cta-primary {
+      border-radius: var(--radius-pill);
+      padding: 0.75rem 1.4rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      background: linear-gradient(135deg, #f97316, #facc15);
+      color: #020617;
+      border: none;
+      box-shadow: var(--shadow-soft);
+      cursor: pointer;
+    }
+    .cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      color: var(--accent-soft);
+    }
+    .cta-secondary span {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(248, 250, 252, 0.6);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+    }
+
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.72rem;
+      margin-top: 0.6rem;
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px dashed rgba(148, 163, 184, 0.7);
+      color: var(--text-muted);
+    }
+    .status-pill strong { color: var(--accent); }
+    .status-pill small {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    /* Right visual / parallax */
+    .hero-visual {
+      position: relative;
+      min-height: 260px;
+      perspective: 1100px;
+    }
+    .device-shell {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      margin-left: auto;
+      margin-right: auto;
+      transform-style: preserve-3d;
+    }
+    .phone {
+      position: relative;
+      border-radius: 38px;
+      padding: 0.7rem;
+      background: radial-gradient(circle at 10% 0, #111827, #020617);
+      box-shadow:
+        0 32px 60px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(148, 163, 184, 0.35);
+      transform: translateZ(40px);
+    }
+    .phone-bezel {
+      border-radius: 30px;
+      padding: 0.55rem;
+      background: radial-gradient(circle at 0 0, #1e293b, #020617);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+    }
+    .phone-screen {
+      border-radius: 24px;
+      overflow: hidden;
+      background: radial-gradient(circle at 10% 0, #0f172a, #020617 70%);
+      position: relative;
+      min-height: 260px;
+    }
+    .phone-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.4rem 0.75rem 0.2rem;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+    }
+    .phone-time {
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .phone-notch {
+      position: absolute;
+      left: 50%;
+      top: 8px;
+      transform: translateX(-50%);
+      width: 96px;
+      height: 18px;
+      border-radius: 999px;
+      background: #020617;
+    }
+    .phone-main {
+      padding: 1.4rem 1.15rem 1.05rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+    .phone-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .phone-badge {
+      font-size: 0.63rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: var(--text-muted);
+    }
+    .phone-badge span {
+      color: var(--accent-soft);
+      font-weight: 600;
+    }
+    .phone-heading {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .phone-heading span { color: var(--accent); }
+
+    .phone-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin: 0.2rem 0 0.5rem;
+    }
+    .phone-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .phone-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 9px;
+      background: radial-gradient(circle at 0 0, #22c55e, #16a34a);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: #020617;
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.7);
+    }
+    .phone-icon.wrench {
+      background: radial-gradient(circle at 0 0, #38bdf8, #0369a1);
+    }
+    .phone-icon.box {
+      background: radial-gradient(circle at 0 0, #f97316, #b45309);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .pill {
+      font-size: 0.68rem;
+      padding: 0.28rem 0.6rem;
+      border-radius: var(--radius-pill);
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--text-muted);
+    }
+    .pill strong {
+      color: var(--accent-soft);
+      font-weight: 700;
+    }
+
+    /* Floating parallax cards */
+    .float-card {
+      position: absolute;
+      padding: 0.5rem 0.85rem;
+      border-radius: var(--radius-lg);
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      box-shadow: var(--shadow-soft);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      backdrop-filter: blur(10px);
+    }
+    .float-card.one { top: 10%; right: 2%; transform: translateZ(80px); }
+    .float-card.two { bottom: 4%; left: 0%; transform: translateZ(60px); }
+    .float-card.three { top: 52%; right: 16%; transform: translateZ(100px); }
+
+    .float-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .float-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+    .badge-small {
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* LaunchList widget styling */
+    .waitlist {
+      margin-top: 0.2rem;
+    }
+    .launchlist-widget {
+      width: 100%;
+      max-width: 460px;
+      border-radius: 28px;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      box-shadow: var(--shadow-soft);
+      padding: 0.5rem 0.75rem 0.75rem;
+      overflow: hidden;
+    }
+    .launchlist-widget iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 20px;
+    }
+    .waitlist-caption {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 0.45rem;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 0.7rem 1.25rem 1.1rem;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: center;
+    }
+    .footer-inner {
+      width: 100%;
+      max-width: 1120px;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      border-top: 1px dashed rgba(51, 65, 85, 0.9);
+      padding-top: 0.7rem;
+    }
+
+    @media (max-width: 600px) {
+      .launchlist-widget {
+        padding: 0.4rem 0.5rem 0.6rem;
+      }
+      .float-card.one,
+      .float-card.two,
+      .float-card.three {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Navigation -->
+    <header class="nav">
+      <div class="nav-inner">
+        <div class="brand">
+          <img src="Copy-of-ToolUberLogo.jpg" alt="BorrowHound logo" class="brand-logo-img" />
+          <div>
+            <div class="brand-text-main">BorrowHound</div>
+            <div class="brand-text-sub">Find it. Borrow it. Get it back.</div>
+          </div>
+        </div>
+        <div class="nav-pill">
+          <span class="nav-dot"></span>
+          <span>Early access · 2026</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <main class="hero">
+      <div class="hero-inner">
+        <!-- Left: copy + LaunchList waitlist -->
+        <section class="hero-copy" aria-label="BorrowHound preview">
+          <div class="eyebrow">
+            <span class="eyebrow-tag">New</span>
+            <span class="eyebrow-text">Neighbourhood tool sharing network</span>
+          </div>
+
+          <h1 class="hero-title">
+            Borrow smarter, <span>own less</span>.
+          </h1>
+
+          <p class="hero-sub">
+            BorrowHound.com will help you track, share, and find tools from trusted neighbours so that your next project never stalls waiting on the right gear.
+          </p>
+
+          <div class="coming-chip">
+            <span class="coming-dot"></span>
+            <div>
+              <div class="coming-text-main">Coming soon</div>
+              <div class="coming-text-sub">Be the first to sniff out what’s available around you.</div>
+            </div>
+          </div>
+
+          <div class="cta-row">
+            <button class="cta-primary" type="button" id="scrollToWaitlist">
+              Get on the waitlist
+            </button>
+            <a href="#waitlist" class="cta-secondary">
+              <span>↓</span> See how it works
+            </a>
+          </div>
+
+          <!-- LaunchList widget (Step 2) -->
+          <div id="waitlist" class="waitlist">
+            <div
+              class="launchlist-widget"
+              data-key-id="XiuqMs"
+              data-height="180px"
+            ></div>
+            <p class="waitlist-caption">
+              No spam. BorrowHound will only email you about the beta launch.
+            </p>
+          </div>
+
+          <div class="status-row">
+            <div class="status-pill">
+              Beta radius: <strong>MN &amp; surrounding</strong>
+            </div>
+            <div class="status-pill">
+              Status: <strong>Building</strong> <small>· Private alpha in progress</small>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right: parallax phone -->
+        <section class="hero-visual" aria-hidden="true">
+          <div class="device-shell" data-parallax-container>
+            <div class="phone" data-parallax-layer data-depth="18">
+              <div class="phone-bezel">
+                <div class="phone-screen">
+                  <div class="phone-notch"></div>
+                  <div class="phone-status">
+                    <span class="phone-time">7:21</span>
+                    <span>BorrowHound</span>
+                  </div>
+
+                  <div class="phone-main">
+                    <div class="phone-badge-row">
+                      <div class="phone-badge">
+                        <span>Nearby</span> Garage · 3 min walk
+                      </div>
+                      <div class="phone-badge">
+                        12 tools available
+                      </div>
+                    </div>
+
+                    <h2 class="phone-heading">
+                      Tonight: <span>Borrow a drill</span> instead of buying.
+                    </h2>
+
+                    <ul class="phone-list">
+                      <li>
+                        <span class="phone-icon">⚒</span>
+                        18V cordless drill · due back Sunday
+                      </li>
+                      <li>
+                        <span class="phone-icon wrench">🔧</span>
+                        Metric socket set · owner rated 4.9
+                      </li>
+                      <li>
+                        <span class="phone-icon box">📦</span>
+                        Borrow bag auto-reminds you to return on time
+                      </li>
+                    </ul>
+
+                    <div class="pill-row">
+                      <div class="pill"><strong>Zero</strong> listing fees for early members</div>
+                      <div class="pill">Smart reminders &amp; photo check-in</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="float-card one" data-parallax-layer data-depth="30">
+              <div class="float-chip">
+                <span class="float-dot"></span>
+                <span>Hammer · Ladder · Shop vac</span>
+              </div>
+            </div>
+
+            <div class="float-card two" data-parallax-layer data-depth="22">
+              <div class="badge-small">Built for projects · not storage units</div>
+            </div>
+
+            <div class="float-card three" data-parallax-layer data-depth="38">
+              <div class="badge-small">Backed by smart tracking and gentle nudges.</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>© <span id="year"></span> BorrowHound.com</span>
+        <span>Made for people who lend things and like getting them back.</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- JS: parallax + smooth scroll -->
+  <script>
+    // Simple parallax on scroll
+    (function () {
+      const layers = document.querySelectorAll('[data-parallax-layer]');
+      const maxShift = 28;
+
+      function handleScroll() {
+        const viewport = window.innerHeight || 1;
+
+        layers.forEach(layer => {
+          const rect = layer.getBoundingClientRect();
+          const depth = parseFloat(layer.getAttribute('data-depth')) || 10;
+          const progress = (rect.top + rect.height / 2 - viewport / 2) / viewport;
+          const translateY = -progress * (depth / 18) * maxShift;
+
+          layer.style.transform =
+            'translate3d(0,' + translateY.toFixed(1) + 'px,0)' +
+            (layer.classList.contains('phone') ? ' scale(1.01)' : '');
+        });
+      }
+
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      window.addEventListener('resize', handleScroll);
+      document.addEventListener('DOMContentLoaded', function () {
+        const year = document.getElementById('year');
+        if (year) year.textContent = new Date().getFullYear();
+        handleScroll();
+      });
+    })();
+
+    // Smooth scroll to waitlist
+    (function () {
+      const btn = document.getElementById('scrollToWaitlist');
+      const target = document.getElementById('waitlist');
+      if (!btn || !target) return;
+      btn.addEventListener('click', function () {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    })();
+  </script>
+</body>
+</html>
